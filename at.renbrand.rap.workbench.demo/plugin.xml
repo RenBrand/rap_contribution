@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="mailapp.entrypoints"
+         point="org.eclipse.rap.ui.entrypoint">
+      <entrypoint
+            path="/mail"
+            applicationId="at.renbrand.rap.workbench.demo.mailapp"
+            id="mailapp.entrypoint">
+      </entrypoint>
+   </extension>
+   <extension
+         id="at.renbrand.rap.workbench.demo.mailapp"
+         point="org.eclipse.core.runtime.applications">
+      <application
+            thread="main"
+            cardinality="singleton-global"
+            visible="true">
+         <run
+               class="at.renbrand.rap.workbench.demo.Application">
+         </run>
+      </application>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="RAP Perspective"
+            class="at.renbrand.rap.workbench.demo.Perspective"
+            id="at.renbrand.rap.workbench.demo.perspective">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="true"
+            name="Message"
+            icon="icons/sample2.gif"
+            class="at.renbrand.rap.workbench.demo.View"
+            id="at.renbrand.rap.workbench.demo.view">
+      </view>
+      <view
+            name="Mailboxes"
+            icon="icons/sample3.gif"
+            class="at.renbrand.rap.workbench.demo.NavigationView"
+            id="at.renbrand.rap.workbench.demo.navigationView">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            name="Mail"
+            id="at.renbrand.rap.workbench.demo.category">
+      </category>
+      <command
+            name="Open Mailbox"
+            description="Opens a mailbox"
+            categoryId="at.renbrand.rap.workbench.demo.category"
+            id="at.renbrand.rap.workbench.demo.open">
+      </command>
+      <command
+            name="Open Message Dialog"
+            description="Opens a message dialog"
+            categoryId="at.renbrand.rap.workbench.demo.category"
+            id="at.renbrand.rap.workbench.demo.openMessage">
+      </command>
+   </extension>
+
+</plugin>
