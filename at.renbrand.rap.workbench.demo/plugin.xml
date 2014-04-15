@@ -66,5 +66,29 @@
             id="at.renbrand.rap.workbench.demo.openMessage">
       </command>
    </extension>
+   <extension
+         point="org.eclipse.ui.presentationFactories">
+      <factory
+            class="at.renbrand.rap.workbench.detach.DnDPresentationFactory"
+            id="at.renbrand.rap.workbench.detach.DND"
+            name="DnDPresentationFactory">
+      </factory>
+   </extension>
+   <extension
+         id="detachedMail"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="at.renbrand.rap.workbench.demo.mail"
+            name="Detached Mail Windows">
+         <property
+               name="appName"
+               value="Detached Mail Windows">
+         </property>
+         <property
+               name="preferenceCustomization"
+               value="preferences.ini">
+         </property>
+      </product>
+   </extension>
 
 </plugin>
