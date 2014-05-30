@@ -10,6 +10,9 @@ import org.eclipse.ui.internal.ViewStack;
 import org.eclipse.ui.internal.WorkbenchPage;
 import org.eclipse.ui.presentations.StackPresentation;
 
+import at.renbrand.rap.detach.DetachedShellFactory;
+import at.renbrand.rap.detach.UnleashedShell;
+
 @SuppressWarnings("restriction")  // NOMPD: can't bypass this
 public class DetachedWindow {
 
@@ -17,7 +20,7 @@ public class DetachedWindow {
     private final CustomViewStack folder;
     private final DropOutsideWindow dropOutsideWindow;
     
-    private Shell windowShell;
+    private UnleashedShell windowShell;
     
     public DetachedWindow(IWorkbenchPage workbenchPage, DropOutsideWindow dropOutsideWindow) {
         this.page = (WorkbenchPage) Objects.requireNonNull(workbenchPage, "No WorkbenchPage given!");
@@ -27,27 +30,26 @@ public class DetachedWindow {
     
     public StackPresentation create(){
         Shell workbenchWindowShell = page.getWorkbenchWindow().getShell();
-        windowShell = new Shell(workbenchWindowShell.getDisplay(), SWT.NO_TRIM | workbenchWindowShell.getOrientation());
-        windowShell.setFullScreen(true);
-        windowShell.setData(this);
+        windowShell = DetachedShellFactory.create(workbenchWindowShell, SWT.NO_TRIM | workbenchWindowShell.getOrientation());
+        Shell s = windowShell.getShell();
+        s.setFullScreen(true);
+        s.setData(this);
         
         // create the tab folder
-        folder.createControl(windowShell);
+        folder.createControl(s);
         
-        windowShell.layout(true);
-        folder.setBounds(windowShell.getClientArea());
+        s.layout(true);
+        folder.setBounds(s.getClientArea());
         
         return folder.getPresentation();
     }
     
-    public Shell getShell(){
+    public UnleashedShell getUnleashedShell(){
         return windowShell;
     }
     
     public void open(){
         if( windowShell == null ) return;
-        
-//        windowShell.setVisible(true);
         windowShell.open();
     }
 
@@ -66,7 +68,7 @@ public class DetachedWindow {
             super.add(newChild, cookie);
             
             // move it to the new shell
-            dropOutsideWindow.ensureHTMLLocation(windowShell, newChild.getControl());
+			dropOutsideWindow.ensureHTMLLocation(windowShell.getShell(), newChild.getControl());
         }
     }
 }

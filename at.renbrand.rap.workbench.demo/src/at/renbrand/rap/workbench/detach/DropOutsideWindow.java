@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import org.eclipse.rap.json.JsonArray;
 import org.eclipse.rap.json.JsonObject;
 import org.eclipse.rap.json.JsonValue;
 import org.eclipse.rap.rwt.RWT;
@@ -113,26 +112,11 @@ class DropOutsideWindow {
         DetachedWindow detachedWindow = new DetachedWindow(page, this);
         StackPresentation newStack = detachedWindow.create();
         
-        JsonObject styleParameter = new JsonObject();
-        styleParameter.add("x", x);
-        styleParameter.add("y", y);
-        
         Point p = Display.getCurrent().getActiveShell().getSize();
-        styleParameter.add("width", p.x);
-        styleParameter.add("heigth", p.y);
-        
-        JsonArray partsParameter = new JsonArray();
-        for( CTabItem tab : toDetach ){
-            partsParameter.add(tab.getText());
+        if( toDetach.length > 0 ){
+        	detachedWindow.getUnleashedShell().setTitle(toDetach[0].getText());
         }
-        
-        JsonObject parameter = new JsonObject();
-        parameter.add("style", styleParameter );
-        parameter.add("parts", partsParameter );
-        parameter.add("newShell", WidgetUtil.getId(detachedWindow.getShell()));
-        
-        remoteObject.call("detachWindow", parameter);
-        
+        detachedWindow.getUnleashedShell().setBounds(x, y, p.x, p.y);
         detachedWindow.open();
         
         return newStack;

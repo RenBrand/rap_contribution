@@ -176,6 +176,8 @@ public final class UnleashedShell {
 		}
 		parameter.add("specs", createOpenSpecs());
 		
+		shell.setLocation(0,0);  // if not set to 0,0 the shell inside the browser would be displayed anywhere (TODO: find better solution, maybe change setBounds())
+		
 		remoteObject.call("detachWindow", parameter);
 	}
 	

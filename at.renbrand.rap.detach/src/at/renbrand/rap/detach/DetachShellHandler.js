@@ -5,7 +5,7 @@ rap.registerTypeHandler( "at.renbrand.rap.detach.unleashedShell", {
 
     destructor : "destruct",
 
-    methods : [ "detachWindow", "ensureHTMLLocation" ]
+    methods : [ "detachWindow" ]
 });
 
 rwt.qx.Class.define( "at.renbrand.rap.detach.UnleashedShell", {
@@ -121,13 +121,6 @@ rwt.qx.Class.define( "at.renbrand.rap.detach.UnleashedShell", {
                 throw new Error( "EventHandler: Failed to attach window event types: " + vEventTypes + ": " + ex );
             }
                   
-        },
-
-        ensureHTMLLocation : function( controlParam ){
-            var newShell = rwt.remote.ObjectRegistry.getEntry( controlParam.shellID ).object;
-            var control = rwt.remote.ObjectRegistry.getEntry( controlParam.controlID ).object;
-
-            newShell._getTargetNode().appendChild( control._getTargetNode() );
         }
     }
 });
