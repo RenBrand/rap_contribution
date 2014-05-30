@@ -7,13 +7,18 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
+
+import at.renbrand.rap.detach.DetachedShellFactory;
+import at.renbrand.rap.detach.UnleashedShell;
 
 /**
  * This view shows a &quot;mail message&quot;. This class is contributed through
@@ -81,6 +86,32 @@ public class View extends ViewPart {
 						"- perspectives with placeholders for new views\n"+
 						"- use the default about dialog\n");
 		text.setLayoutData(new GridData(GridData.FILL_BOTH));
+		
+		Button b = new Button(top, SWT.PUSH);
+		b.setText("Open a detached window!");
+		b.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				UnleashedShell unleashed = DetachedShellFactory.create(getViewSite().getShell(), SWT.NONE);
+				unleashed.setTitle("A new detached window!");
+				unleashed.getShell().setLayout(new FillLayout());
+				
+				final Label l = new Label( unleashed.getShell(), SWT.NONE );
+				l.setText("Hello World!");
+				
+				Button b = new Button( unleashed.getShell(), SWT.PUSH );
+				b.setText("change");
+				
+				b.addSelectionListener(new SelectionAdapter() {
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						l.setText("Changed: " + l.getText());
+					}
+				});
+				
+				unleashed.open();
+			}
+		});
 	}
 
 	public void setFocus() {

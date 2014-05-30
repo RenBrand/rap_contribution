@@ -1,16 +1,10 @@
 package at.renbrand.rap.workbench.detach;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-import org.eclipse.rap.rwt.RWT;
-import org.eclipse.rap.rwt.client.service.JavaScriptLoader;
-import org.eclipse.rap.rwt.service.ResourceManager;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.widgets.Control;
@@ -135,42 +129,6 @@ public final class DnDHelper {
         }
         
         return null;
-    }
-    
-    /**
-     * Registers the given resource in the {@link ResourceManager}.
-     * @param resourceFileName the name of the resource file (must be at the same package as this class)
-     */
-    static void registerResource(String resourceFileName){
-        ResourceManager rm = RWT.getResourceManager();
-        
-        if( !rm.isRegistered(Objects.requireNonNull(resourceFileName, "No resource filename given!")) ){
-            try( InputStream resourceStream = DnDHelper.class.getResourceAsStream(resourceFileName) ){
-                rm.register(resourceFileName, resourceStream);
-            } catch (IOException e) {
-                System.err.println("Can't load resource '" + resourceFileName + "'! (reason: " + e.getMessage() + ')');
-                e.printStackTrace();
-            }
-        }
-    }
-    
-    /**
-     * Loads a JavaScript resource if it was already registered in the {@link ResourceManager}. 
-     * @param javaScriptResourceFileName the JavaScript-Resource name registered at the {@link ResourceManager}
-     */
-    static void loadScriptResource(String javaScriptResourceFileName){
-        ResourceManager rm = RWT.getResourceManager();
-        
-        if( rm.isRegistered(Objects.requireNonNull(javaScriptResourceFileName, "No JavaScript resource filename given!")) ){
-            JavaScriptLoader loader = RWT.getClient().getService(JavaScriptLoader.class);
-            if( loader != null ){
-                loader.require(rm.getLocation(javaScriptResourceFileName));
-            } else {
-                System.err.println("No JavaScriptLoader found for current client! (" + RWT.getClient() + ')');
-            }
-        } else {
-            throw new IllegalArgumentException('\'' + javaScriptResourceFileName + "' resource is not registered!");
-        }
     }
     
     /**

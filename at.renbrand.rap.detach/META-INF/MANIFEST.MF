@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Detach Shells
+Bundle-SymbolicName: at.renbrand.rap.detach
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Require-Bundle: org.eclipse.rap.rwt;bundle-version="2.2.0"
+Export-Package: at.renbrand.rap.detach

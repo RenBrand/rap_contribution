@@ -5,3 +5,4 @@ Bundle-SymbolicName: at.renbrand.rap.workbench.demo;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.eclipse.rap.ui;bundle-version="[2.0.0,3.0.0)"
+Import-Package: at.renbrand.rap.detach

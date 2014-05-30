@@ -1,7 +1,7 @@
 package at.renbrand.rap.workbench.detach;
 
-import static at.renbrand.rap.workbench.detach.DnDHelper.loadScriptResource;
-import static at.renbrand.rap.workbench.detach.DnDHelper.registerResource;
+import static at.renbrand.rap.detach.ScriptUtils.loadScriptResource;
+import static at.renbrand.rap.detach.ScriptUtils.registerResource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +63,7 @@ class DropOutsideWindow {
     private final List<Listener> listener = new ArrayList<>();
     
     private DropOutsideWindow() {
-        registerResource(HANDLER_SCRIPT);
+        registerResource(HANDLER_SCRIPT, DropOutsideWindow.class);
         loadScriptResource(HANDLER_SCRIPT);
         
         Connection connection = RWT.getUISession().getConnection();
